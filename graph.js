@@ -168,14 +168,14 @@ function dataParse() {
 
 function getGraphFromMatrix() {
     let obj = dataParse();
-    for (let i = 1; i < obj.matrix.length - 1; i++) {
-        for (let j = i + 1; j < obj.matrix[0].length; j++) {
-            if (Number(obj.matrix[i, j]) != 0) {
-                obj.graph.addEdge(i, j, Number(obj.matrix[i, j]))
+    for (let i = 0; i < obj.matrix.length; i++) {
+        for (let j = i + 1; j < obj.matrix.length; j++) {
+            if (Number(obj.matrix[i][j]) != 0) {
+                obj.graph.addEdge(i + 1, j + 1, Number(obj.matrix[i][j]))
             }
         }
     }
-    console.log(obj.graph);
+    return obj.graph;
 }
 
 function getGraphFromList() {
@@ -183,6 +183,7 @@ function getGraphFromList() {
     obj.matrix.forEach(item => {
         obj.graph.addEdge(Number(item[0]), Number(item[1]), Number(item[2]));
     })
+    return obj.graph;
 }
 
 function readFile(input) {
@@ -193,7 +194,48 @@ function readFile(input) {
         reader.readAsText(file);
         reader.onload = () => {
             data = reader.result;
-            getGraphFromMatrix();
+
+            saveFile(graphToMatrix(getGraphFromList()));
         };
     }
+}
+
+function graphToMatrix(graph) {
+    let matrix = [[]];
+    let tmp = '';
+    matrix[0] = graph.getVerticesCount();
+    for (let i = 0; i < graph.getVerticesCount(); i++) {
+        for (let j = 0; j < graph.getVerticesCount(); j++) {
+            if (graph.checkVerticesAdjacent(i + 1, j + 1)) {
+                tmp = tmp.concat(`${graph.getEdgeWeight(i + 1, j + 1)} `);
+            } else tmp = tmp.concat(`0 `);
+        }
+        matrix[matrix.length] = tmp;
+        tmp = '';
+    }
+    return matrix;
+}
+
+function graphToList(graph) {
+    let list = [[]];
+    list[0] = graph.getVerticesCount();
+    let tmp = '';
+    graph.getEdges().forEach(item => {
+        let edge = JSON.parse(item);
+        tmp = tmp.concat(`${edge.vertexX} ${edge.vertexY} ${edge.weight}`);
+        list[list.length] = tmp;
+        tmp = '';
+    })
+    return list;
+}
+
+function saveFile(arr) {
+    let name = document.getElementById('filename').value.concat('.txt');
+    let text = '';
+    arr.forEach(item => {
+        text = text.concat(`${item}`, "\r\n")
+    })
+    let file = new Blob([text], { type: 'text/plain' });
+    document.getElementById('link').setAttribute('download', name);
+    document.getElementById('link').href = URL.createObjectURL(file);
 }

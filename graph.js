@@ -128,7 +128,7 @@ class Graph {
         return list;
     }
 }
-function test() {
+/*function test() {
     let g = new Graph();
     g.addVertex(1);
     g.addVertex(3);
@@ -145,4 +145,55 @@ function test() {
 
     console.log(g.getShortcut(1, 3));
 }
+*/
+let data;
 
+function dataParse() {
+    let array = data.split("\r\n");
+    let vertexCount = Number(array[0]);
+    let matrix = [[], []];
+    for (let i = 1; i < array.length; i++) {
+        matrix[i - 1] = array[i].split(" ");
+    }
+
+    let graph = new Graph();
+    for (let i = 1; i <= vertexCount; i++) {
+        graph.addVertex(i);
+    }
+    return {
+        graph: graph,
+        matrix: matrix
+    }
+}
+
+function getGraphFromMatrix() {
+    let obj = dataParse();
+    for (let i = 1; i < obj.matrix.length - 1; i++) {
+        for (let j = i + 1; j < obj.matrix[0].length; j++) {
+            if (Number(obj.matrix[i, j]) != 0) {
+                obj.graph.addEdge(i, j, Number(obj.matrix[i, j]))
+            }
+        }
+    }
+    console.log(obj.graph);
+}
+
+function getGraphFromList() {
+    let obj = dataParse();
+    obj.matrix.forEach(item => {
+        obj.graph.addEdge(Number(item[0]), Number(item[1]), Number(item[2]));
+    })
+}
+
+function readFile(input) {
+    let file = input.files[0];
+    let type = file.type.replace(/\/.+/, '');
+    if (type == "text") {
+        let reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = () => {
+            data = reader.result;
+            getGraphFromMatrix();
+        };
+    }
+}

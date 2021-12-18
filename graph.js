@@ -17,7 +17,8 @@ class Graph {
     }
 
     addEdge(vertex1, vertex2, value) {
-        if (this.checkVertexPresence(vertex1) && this.checkVertexPresence(vertex2) && vertex2 != vertex1) {
+        if (this.checkVertexPresence(vertex1) && this.checkVertexPresence(vertex2) &&
+            vertex2 != vertex1) {
             this.edges.add(JSON.stringify({
                 vertexX: (vertex1 < vertex2) ? vertex1 : vertex2,
                 vertexY: (vertex1 > vertex2) ? vertex1 : vertex2,
@@ -82,17 +83,6 @@ class Graph {
                 distances.set(x, Infinity);
             } else distances.set(x, 0);
         })
-
-        /*for (let i = 0; i < this.getEdgesCount(); i++) {
-            this.vertices.forEach(vertex => {
-                this.getNeighbors(JSON.parse(vertex).vertexName).forEach(x => {
-                    let edge = this.getEdge(JSON.parse(vertex).vertexName, JSON.parse(x).vertexName);
-                    if (distances.get(vertex) + JSON.parse(edge).weight < distances.get(x)) {
-                        distances.set(x, distances.get(vertex) + JSON.parse(edge).weight);
-                    }
-                })
-            })
-        }*/
 
         this.vertices.forEach(x => {
             this.edges.forEach(ed => {

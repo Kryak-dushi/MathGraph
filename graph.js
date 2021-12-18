@@ -268,7 +268,17 @@ function saveFile() {
 }
 
 function displayGraph() {
-    document.getElementById("graph").innerHTML = `Вершины: ${Array.from(graph.getVertices()).join(' ')} \n Ребра: ${Array.from(graph.getEdges()).join(' ')}`;
+    let tmp = 'Вершины:';
+    graph.getVertices().forEach(x => {
+        tmp = tmp.concat(` ${vname(x)}`);
+    })
+    document.getElementById("ver").innerHTML = tmp;
+
+    tmp = 'Ребра:';
+    graph.getEdges().forEach(x => {
+        tmp = tmp.concat(`<br>${ename(x)}`);
+    })
+    document.getElementById("ed").innerHTML = tmp;
 }
 
 function addVertex() {
@@ -298,17 +308,17 @@ function delEdge() {
 }
 
 function displayVerticesCount() {
-    document.getElementsByName('vcount')[0].innerHTML = graph.getVerticesCount();
+    document.getElementsByName('vcount')[0].innerHTML = `Количество вершин: ${graph.getVerticesCount()}`;
 }
 
 function displayEdgesCount() {
-    document.getElementsByName('ecount')[0].innerHTML = graph.getEdgesCount();
+    document.getElementsByName('ecount')[0].innerHTML = `Количество ребер: ${graph.getEdgesCount()}`;
 }
 
 function checkAdjacent() {
     let input = document.querySelector("#adjacent > input").value;
     let edge = input.split(",");
-    document.querySelector("#adjacent > p").innerHTML = graph.checkVerticesAdjacent(Number(edge[0]), Number(edge[1]));
+    document.querySelector("#adjacent > p").innerHTML = (graph.checkVerticesAdjacent(Number(edge[0]), Number(edge[1]))) ? 'Смежные' : 'Не смежные';
 }
 
 function getWeight() {
@@ -321,4 +331,22 @@ function getShortcut() {
     let input = document.querySelector("#shortcut > input").value;
     let edge = input.split(",");
     document.querySelector("#shortcut > p").innerHTML = graph.getShortcut(Number(edge[0]), Number(edge[1]));
+}
+
+function getNeigbors() {
+    let input = document.querySelector("#neigbors > input").value;
+    let tmp = `Вершины, смежные с ${input}:`;
+    graph.getNeighbors(Number(input)).forEach(x => {
+        tmp = tmp.concat(` ${vname(x)}`);
+    });
+    document.querySelector("#neigbors > p").innerHTML = tmp;
+}
+
+function vname(vertex) {
+    return JSON.parse(vertex).vertexName;
+}
+
+function ename(edge) {
+    let o = JSON.parse(edge);
+    return `{x: ${o.vertexX}, y: ${o.vertexY}, w: ${o.weight}}`
 }

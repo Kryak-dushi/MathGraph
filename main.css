@@ -18,6 +18,11 @@ h1 {
     margin-top: 20px;
 }
 
+a {
+    text-decoration: none;
+    color: #3644F0;
+}
+
 .group {
     margin: 15px 10px;
 }
@@ -27,7 +32,7 @@ button {
     border-radius: 5px;
     background: #24a3ee;
     color: #fff;
-    padding: 8px 25px;
+    padding: 7px 25px;
     width: fit-content;
     margin: 10px 10px 0px;
 }
@@ -35,11 +40,42 @@ button {
 input[type="text"] {
     border: 1px solid #24a3ee;
     border-radius: 5px;
-    background: #CCEBFD;
     outline: none;
     width: 150px;
-    height: 30px;
+    height: 40px;
     padding: 3px;
+}
+
+input[type="file"]-button {
+    border: 0;
+    border-radius: 5px;
+    background: #24a3ee;
+    color: #fff;
+    padding: 7px 25px;
+    width: fit-content;
+    margin: 10px 10px 0px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    border-radius: 3px;
+    cursor: pointer;
+    margin: 0 auto;
+}
+
+input [type="radio"] {
+    border: 1px solid #24a3ee;
+    background: #CCEBFD;
+    outline: none;
+}
+
+label {
+    padding: 10px;
 }
 
 .main_container {
@@ -55,4 +91,11 @@ input[type="text"] {
 
 .container {
     margin: 1em;
+}
+
+.display {
+    position: fixed;
+    z-index: 101;
+    width: 17%;
+    margin: 15px;
 }

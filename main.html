@@ -8,10 +8,12 @@
         <title>Math Graph</title>
     </head>
     <body>
-        <div class="main_container">
-            <div id="graph">
-            </div>
+        <div class="display">
+            <p id="ver"></p>
+            <p id="ed"></p>
+        </div>
 
+        <div class="main_container">
             <h1>Добавить вершину</h1>
             <div class="container" id="addVertex">
                 <input type="text">
@@ -46,7 +48,7 @@
                 <input type="file" id="loadList" onchange="loadList(this)">
             </div>
 
-            <h1>Сохранить</h1>
+            <h1>Сохранить как</h1>
             <div class="container" id="save">
                 <div class="group">
                     <input type="radio" name="option" value="Matrix"><label>Матрица</label>
@@ -56,7 +58,7 @@
                 <div>
                     <input type="text" id="filename" placeholder="Имя файла">
                     <a download='default' href='#' id="link"
-                        onclick="saveFile()">Загрузить</a>
+                        onclick="saveFile()">Скачать</a>
                 </div>
             </div>
 
@@ -73,6 +75,13 @@
             <div class="container" id="adjacent">
                 <input type="text">
                 <button onclick="checkAdjacent()">Проверить</button>
+                <p></p>
+            </div>
+
+            <h1>Смежные вершины</h1>
+            <div class="container" id="neigbors">
+                <input type="text">
+                <button onclick="getNeigbors()">Найти</button>
                 <p></p>
             </div>
 

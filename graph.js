@@ -7,7 +7,9 @@ class Graph {
     }
 
     addVertex(name) {
-        this.vertices.add(JSON.stringify({
+        if (this.checkVertexPresence(name)) {
+            alert('Такая вершина уже есть');
+        } else this.vertices.add(JSON.stringify({
             vertexName: name
         }));
     }
@@ -286,7 +288,11 @@ function delVertex() {
 function addEgde() {
     let input = document.querySelector("#addEdge > input").value;
     let edge = input.split(",");
-    graph.addEdge(Number(edge[0]), Number(edge[1]), Number(edge[2]));
+    if (edge[2] === undefined || edge[2] == '') {
+        alert('Вес ребра не задан');
+    } else if (graph.checkVerticesAdjacent(Number(edge[0]), Number(edge[1]))) {
+        alert('Такое ребро уже есть');
+    } else graph.addEdge(Number(edge[0]), Number(edge[1]), Number(edge[2]));
     displayGraph();
 }
 
@@ -339,4 +345,9 @@ function vname(vertex) {
 function ename(edge) {
     let o = JSON.parse(edge);
     return `{x: ${o.vertexX}, y: ${o.vertexY}, w: ${o.weight}}`
+}
+
+function clearGraph() {
+    graph.clear();
+    displayGraph();
 }

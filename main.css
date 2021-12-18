@@ -1,0 +1,58 @@
+* {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+p, label, button, input, div {
+    font-size: 24px;
+}
+
+p {
+    margin: 15px 0px;
+}
+
+h1 {
+    font-size: 2em;
+    color: #3644F0;
+    margin-top: 20px;
+}
+
+.group {
+    margin: 15px 10px;
+}
+
+button {
+    border: 0;
+    border-radius: 5px;
+    background: #24a3ee;
+    color: #fff;
+    padding: 8px 25px;
+    width: fit-content;
+    margin: 10px 10px 0px;
+}
+
+input[type="text"] {
+    border: 1px solid #24a3ee;
+    border-radius: 5px;
+    background: #CCEBFD;
+    outline: none;
+    width: 150px;
+    height: 30px;
+    padding: 3px;
+}
+
+.main_container {
+    width: 60%;
+    margin: 15px auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    background-color: #CCEBFD;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.container {
+    margin: 1em;
+}

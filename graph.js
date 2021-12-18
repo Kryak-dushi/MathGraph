@@ -127,26 +127,15 @@ class Graph {
         })
         return list;
     }
-}
-/*function test() {
-    let g = new Graph();
-    g.addVertex(1);
-    g.addVertex(3);
-    g.addVertex(4);
-    g.addVertex(2);
-    g.addVertex(5);
 
-    g.addEdge(1, 2, 1);
-    g.addEdge(1, 5, 2);
-    g.addEdge(2, 4, 1);
-    g.addEdge(2, 3, 6);
-    g.addEdge(5, 4, 4);
-    g.addEdge(4, 3, 1);
-
-    console.log(g.getShortcut(1, 3));
+    clear() {
+        this.vertices.clear();
+        this.edges.clear();
+    }
 }
-*/
+
 let data;
+let graph = new Graph();
 
 function dataParse() {
     let array = data.split("\r\n");
@@ -156,7 +145,7 @@ function dataParse() {
         matrix[i - 1] = array[i].split(" ");
     }
 
-    let graph = new Graph();
+    graph.clear();
     for (let i = 1; i <= vertexCount; i++) {
         graph.addVertex(i);
     }
@@ -194,13 +183,39 @@ function readFile(input) {
         reader.readAsText(file);
         reader.onload = () => {
             data = reader.result;
-
-            saveFile(graphToMatrix(getGraphFromList()));
         };
     }
 }
 
-function graphToMatrix(graph) {
+function loadMatrix(input) {
+    let file = input.files[0];
+    let type = file.type.replace(/\/.+/, '');
+    if (type == "text") {
+        let reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = () => {
+            data = reader.result;
+            getGraphFromMatrix();
+            displayGraph();
+        };
+    }
+}
+
+function loadList(input) {
+    let file = input.files[0];
+    let type = file.type.replace(/\/.+/, '');
+    if (type == "text") {
+        let reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = () => {
+            data = reader.result;
+            getGraphFromList();
+            displayGraph();
+        };
+    }
+}
+
+function graphToMatrix() {
     let matrix = [[]];
     let tmp = '';
     matrix[0] = graph.getVerticesCount();
@@ -216,7 +231,7 @@ function graphToMatrix(graph) {
     return matrix;
 }
 
-function graphToList(graph) {
+function graphToList() {
     let list = [[]];
     list[0] = graph.getVerticesCount();
     let tmp = '';
@@ -229,13 +244,81 @@ function graphToList(graph) {
     return list;
 }
 
-function saveFile(arr) {
+function saveFile() {
     let name = document.getElementById('filename').value.concat('.txt');
     let text = '';
+    let option;
+    let options = document.querySelectorAll("div.group > input[type='radio']");
+    for (var i = 0; i < options.length; i++) {
+        if (options[i].checked) {
+            option = options[i].value;
+        }
+    }
+    let arr;
+    if (option == "Matrix") {
+        arr = graphToMatrix();
+    } else arr = graphToList();
+
     arr.forEach(item => {
         text = text.concat(`${item}`, "\r\n")
     })
     let file = new Blob([text], { type: 'text/plain' });
     document.getElementById('link').setAttribute('download', name);
     document.getElementById('link').href = URL.createObjectURL(file);
+}
+
+function displayGraph() {
+    document.getElementById("graph").innerHTML = `Вершины: ${Array.from(graph.getVertices()).join(' ')} \n Ребра: ${Array.from(graph.getEdges()).join(' ')}`;
+}
+
+function addVertex() {
+    let name = document.querySelector("#addVertex > input").value;
+    graph.addVertex(Number(name));
+    displayGraph();
+}
+
+function delVertex() {
+    let name = document.querySelector("#delVertex > input").value;
+    graph.delVertex(Number(name));
+    displayGraph();
+}
+
+function addEgde() {
+    let input = document.querySelector("#addEdge > input").value;
+    let edge = input.split(",");
+    graph.addEdge(Number(edge[0]), Number(edge[1]), Number(edge[2]));
+    displayGraph();
+}
+
+function delEdge() {
+    let input = document.querySelector("#delEdge > input").value;
+    let edge = input.split(",");
+    graph.delEdge(Number(edge[0]), Number(edge[1]));
+    displayGraph();
+}
+
+function displayVerticesCount() {
+    document.getElementsByName('vcount')[0].innerHTML = graph.getVerticesCount();
+}
+
+function displayEdgesCount() {
+    document.getElementsByName('ecount')[0].innerHTML = graph.getEdgesCount();
+}
+
+function checkAdjacent() {
+    let input = document.querySelector("#adjacent > input").value;
+    let edge = input.split(",");
+    document.querySelector("#adjacent > p").innerHTML = graph.checkVerticesAdjacent(Number(edge[0]), Number(edge[1]));
+}
+
+function getWeight() {
+    let input = document.querySelector("#weight > input").value;
+    let edge = input.split(",");
+    document.querySelector("#weight > p").innerHTML = graph.getEdgeWeight(Number(edge[0]), Number(edge[1]));
+}
+
+function getShortcut() {
+    let input = document.querySelector("#shortcut > input").value;
+    let edge = input.split(",");
+    document.querySelector("#shortcut > p").innerHTML = graph.getShortcut(Number(edge[0]), Number(edge[1]));
 }

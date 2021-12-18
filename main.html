@@ -3,12 +3,92 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./main.css">
         <script src="./graph.js"></script>
         <title>Math Graph</title>
     </head>
     <body>
-        <input type="file" id="data" onchange="readFile(this)">
-        <input type="text" id="filename">
-        <a download='default' href='#' id="link">Загрузить</a>
+        <div class="main_container">
+            <div id="graph">
+            </div>
+
+            <h1>Добавить вершину</h1>
+            <div class="container" id="addVertex">
+                <input type="text">
+                <button onclick="addVertex()">Добавить</button>
+            </div>
+
+            <h1>Удалить вершину</h1>
+            <div class="container" id="delVertex">
+                <input type="text">
+                <button onclick="delVertex()">Удалить</button>
+            </div>
+
+            <h1>Добавить ребро</h1>
+            <div class="container" id="addEdge">
+                <input type="text">
+                <button onclick="addEgde()">Добавить</button>
+            </div>
+
+            <h1>Удалить ребро</h1>
+            <div class="container" id="delEdge">
+                <input type="text">
+                <button onclick="delEdge()">Удалить</button>
+            </div>
+
+            <h1>Загрузить матрицу смежности</h1>
+            <div class="container">
+                <input type="file" id="loadMatrix" onchange="loadMatrix(this)">
+            </div>
+
+            <h1>Загрузить список ребер</h1>
+            <div class="container">
+                <input type="file" id="loadList" onchange="loadList(this)">
+            </div>
+
+            <h1>Сохранить</h1>
+            <div class="container" id="save">
+                <div class="group">
+                    <input type="radio" name="option" value="Matrix"><label>Матрица</label>
+                    <input type="radio" name="option" value="List"><label>Список
+                        ребер</label>
+                </div>
+                <div>
+                    <input type="text" id="filename" placeholder="Имя файла">
+                    <a download='default' href='#' id="link"
+                        onclick="saveFile()">Загрузить</a>
+                </div>
+            </div>
+
+            <div class="container" id="count">
+                <button onclick="displayVerticesCount()">Количество вершин</button>
+                <button onclick="displayEdgesCount()">Количество ребер</button>
+                <div>
+                    <p name="vcount"></p>
+                    <p name="ecount"></p>
+                </div>
+            </div>
+
+            <h1>Являются ли вершины смежными</h1>
+            <div class="container" id="adjacent">
+                <input type="text">
+                <button onclick="checkAdjacent()">Проверить</button>
+                <p></p>
+            </div>
+
+            <h1>Вес ребра</h1>
+            <div class="container" id="weight">
+                <input type="text">
+                <button onclick="getWeight()">Найти</button>
+                <p></p>
+            </div>
+
+            <h1>Кратчайший путь</h1>
+            <div class="container" id="shortcut">
+                <input type="text">
+                <button onclick="getShortcut()">Найти</button>
+                <p></p>
+            </div>
+        </div>
     </body>
 </html>
